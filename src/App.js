@@ -6,9 +6,9 @@ import Person from './Person/Person';
 class App extends Component{
   state = {
     persons : [
-      {name : 'Max', age: 28},
-      {name : 'Steven', age:22},
-      {name : 'James', age: 32}
+      {id:"dnefnafd", name : 'Max', age: 28},
+      {id:"asdcxxsa", name : 'Steven', age:22},
+      {id:"dsdfdcea", name : 'James', age: 32}
 
     ],
     showPersons : false
@@ -17,15 +17,19 @@ class App extends Component{
 
 
 
-  nameChangedHandler = (event) =>{
-    this.setState({
-      persons : [
-        {name : 'Max', age: 28},
-        {name : event.target.value, age:22},
-        {name : 'James', age: 39}
+  nameChangedHandler = (event, id) =>{
+    const personIndex = this.state.persons.findIndex(p =>{
+      return p.id === id;
+    });
+    //let person = this.state.persons[personIndex]; this is bad because it mutates the original state
+    const person = {
+      ...this.state.persons[personIndex]
+    }; //copy the one wanted object
   
-      ]
-    })
+    person.name = event.target.value;
+    const persons = [...this.state.persons]; // copy the whole persons array
+    persons[personIndex]=person;
+    this.setState({persons : persons});
   }
 
   deletePersonHandler = (personIndex) =>{
@@ -58,7 +62,9 @@ class App extends Component{
             return <Person 
               click = {() =>this.deletePersonHandler(index)}
               name={person.name}
-              age = {person.age}/>
+              age = {person.age}
+              key = {person.id}
+              changed ={(event) => this.nameChangedHandler(event, person.id)}/>
           })}
         </div>
       );
