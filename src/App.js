@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import Radium from 'radium';
+import Radium, {StyleRoot} from 'radium';
 import Person from './Person/Person';
 
 
@@ -52,7 +52,7 @@ class App extends Component{
       font: 'inherit',
       border: '1x solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
       ':hover':{
         backgroundColor: 'lightgreen',
         color: 'black'
@@ -90,14 +90,16 @@ class App extends Component{
       classes.push('bold');
     }
   return (
-    <div className="App">
-      <h1>Hi, I'm a react app</h1>
-      <p className={classes.join(' ')}>This is really working</p>
-      <button 
-        style = {style}
-        onClick = {this.togglePersonHandler}>Toggle Name</button>
-        {persons}
-    </div>
+    <StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm a react app</h1>
+        <p className={classes.join(' ')}>This is really working</p>
+        <button 
+          style = {style}
+          onClick = {this.togglePersonHandler}>Toggle Name</button>
+          {persons}
+      </div>
+    </StyleRoot>
   );
   //return React.createElement('div', {className:'App'},React.createElement('h1',null,  'Hi, I\'m a react app!!!'))
 }
